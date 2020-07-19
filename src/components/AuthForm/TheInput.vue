@@ -73,6 +73,6 @@ export default {
 .input__hint {
   font-size: 13px;
   color: blue;
-  text-align: right;
+  align-self: flex-end;
 }
 </style>
