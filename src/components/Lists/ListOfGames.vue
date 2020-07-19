@@ -1,0 +1,50 @@
+<template>
+  <ul class="list-of-games">
+    <ItemGame
+      v-for="game in editedList"
+      :key="game.appid"
+      :name="game.name"
+      :id="game.appid"
+      @update:activeGame="updateActiveGame"
+    />
+  </ul>
+</template>
+
+<script>
+import ItemGame from "@/components/ListItems/ItemGame";
+
+export default {
+  props: {
+    listOfGames: Array,
+    search: String,
+  },
+  computed: {
+    editedList() {
+      return this.listOfGames
+        .filter((game) => {
+          return (
+            game.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+          );
+        })
+        .sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+    },
+  },
+  methods: {
+    updateActiveGame(id, name) {
+      this.$emit("update:activeGame", id, name);
+    },
+  },
+  components: {
+    ItemGame,
+  },
+};
+</script>
+
+<style>
+.list-of-games {
+  list-style: none;
+  padding: 0;
+}
+</style>
