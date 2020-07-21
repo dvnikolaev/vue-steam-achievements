@@ -8,6 +8,7 @@
       v-if="showForm"/>
     <AppListGames 
       :listOfGames="listOfGames"
+      :activeGameName="activeGame.name"
       @update:activeGame="updateActiveGame"
       v-if="listOfGames.length"/>
     <AppSpinner v-if="showSpinner" />
@@ -103,7 +104,7 @@ export default {
           achieved: achivedFlagArray[i].achieved
         }
       });
-
+      
       this.activeGame.hiddenAchievements = achievements.filter(item => !item.achieved && item.hidden);
       this.activeGame.achievements = achievements.filter(item => !item.achieved && !item.hidden);
       this.activeGame.name = name;

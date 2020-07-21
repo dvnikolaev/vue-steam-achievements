@@ -4,6 +4,7 @@
     <ListOfGames
       :listOfGames="listOfGames"
       :search="search"
+      :activeGameName="activeGameName"
       @update:activeGame="updateActiveGame"
     />
   </div>
@@ -16,6 +17,7 @@ import ListOfGames from "./Lists/ListOfGames";
 export default {
   props: {
     listOfGames: Array,
+    activeGameName: String
   },
   data() {
     return {

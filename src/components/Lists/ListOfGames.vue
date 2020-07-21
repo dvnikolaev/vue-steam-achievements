@@ -5,6 +5,7 @@
       :key="game.appid"
       :name="game.name"
       :id="game.appid"
+      :activeGameName="activeGameName"
       @update:activeGame="updateActiveGame"
     />
   </ul>
@@ -17,6 +18,7 @@ export default {
   props: {
     listOfGames: Array,
     search: String,
+    activeGameName: String
   },
   computed: {
     editedList() {
