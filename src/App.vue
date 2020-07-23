@@ -12,6 +12,7 @@
       @update:activeGame="updateActiveGame"
       v-if="listOfGames.length"/>
     <AppSpinner v-if="showSpinner" />
+    <Notification :text="notificationText"/>
     <AppListAchievements :activeGame="activeGame" />
   </div>
 </template>
@@ -23,6 +24,7 @@ import AppSpinner from "./components/AppSpinner";
 import AppListAchievements from "./components/AppListAchievements";
 import AppListGames from "./components/AppListGames"
 import AppForm from "./components/AuthForm/AppForm";
+import Notification from "./components/Notification";
 
 export default {
   name: "App",
@@ -40,7 +42,8 @@ export default {
         achievements: [],
         hiddenAchievements: [],
         loading: null
-      }
+      },
+      notificationText: ''
     }
   },
   computed: {
@@ -91,31 +94,50 @@ export default {
     },
     async updateActiveGame(id, name) {
       this.activeGame.loading = true;
-      let { data: { playerstats: { achievements: achivedFlagArray }}} = await axios.get(`${process.env.VUE_APP_STEAM_API_URL}ISteamUserStats/GetPlayerAchievements/v0001/?appid=${id}&key=${this.steamData.apiKey}&steamid=${this.steamData.steamId}&l=russian`);
-      let { data: { game: { availableGameStats: { achievements: achievementsArray }}}} = await axios.get(`${process.env.VUE_APP_STEAM_API_URL}ISteamUserStats/GetSchemaForGame/v2/?key=${this.steamData.apiKey}&appid=${id}&l=russian`);
-
-      let achievements = achievementsArray.map((item, i) => {
-        return {
-          name: item.name,
-          displayName: item.displayName,
-          description: item.description,
-          icon: item.icon,
-          hidden: item.hidden,
-          achieved: achivedFlagArray[i].achieved
-        }
-      });
+      this.activeGame.hiddenAchievements = [];
+      this.activeGame.achievements = [];
       
-      this.activeGame.hiddenAchievements = achievements.filter(item => !item.achieved && item.hidden);
-      this.activeGame.achievements = achievements.filter(item => !item.achieved && !item.hidden);
-      this.activeGame.name = name;
-      this.activeGame.loading = false;
+      try {
+        let { data: { playerstats: { achievements: achivedFlagArray }}} = await axios.get(`${process.env.VUE_APP_STEAM_API_URL}ISteamUserStats/GetPlayerAchievements/v0001/?appid=${id}&key=${this.steamData.apiKey}&steamid=${this.steamData.steamId}&l=russian`);
+        let { data: { game: { availableGameStats: { achievements: achievementsArray }}}} = await axios.get(`${process.env.VUE_APP_STEAM_API_URL}ISteamUserStats/GetSchemaForGame/v2/?key=${this.steamData.apiKey}&appid=${id}&l=russian`);
+      
+        let achievements = achievementsArray.map((item, i) => {
+          return {
+            name: item.name,
+            displayName: item.displayName,
+            description: item.description,
+            icon: item.icon,
+            hidden: item.hidden,
+            achieved: achivedFlagArray[i].achieved
+          }
+        });
+        
+        this.activeGame.hiddenAchievements = achievements.filter(item => !item.achieved && item.hidden);
+        this.activeGame.achievements = achievements.filter(item => !item.achieved && !item.hidden);
+        this.activeGame.name = name;
+        this.activeGame.loading = false;
+      } catch(err) {
+        console.log(err);
+        this.activeGame.loading = false;
+        if (err.response.status === 400) {
+          this.notificationText = "У данной игры нет достижений!"
+
+          setTimeout(() => {
+            this.notificationText = '';
+          },1000)
+        }
+      }
+      
+
+      
     }
   },
   components: {
     AppSpinner,
     AppListAchievements,
     AppListGames,
-    AppForm
+    AppForm,
+    Notification
   }
 };
 </script>
