@@ -49,7 +49,7 @@ export default {
 }
 @media screen and (max-width: 1195px) {
   .list-wrapper {
-    margin: 10px;
+    margin: 10px auto;
   }
 }
 </style>

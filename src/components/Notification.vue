@@ -45,4 +45,10 @@ export default {
 .slideY-leave-to {
   opacity: 0;
 }
+
+@media screen and (max-width: 645px) {
+  .notification__message {
+    text-align: center;
+  }
+}
 </style>
