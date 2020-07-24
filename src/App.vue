@@ -111,6 +111,17 @@ export default {
             achieved: achivedFlagArray[i].achieved
           }
         });
+
+        if(achievements.every(item => item.achieved)) {
+          this.notificationText = "Вы получили все достижения в данной игре!"
+          this.activeGame.loading = false;
+
+          setTimeout(() => {
+            this.notificationText = '';
+          },1000)
+
+          return;
+        }
         
         this.activeGame.hiddenAchievements = achievements.filter(item => !item.achieved && item.hidden);
         this.activeGame.achievements = achievements.filter(item => !item.achieved && !item.hidden);
