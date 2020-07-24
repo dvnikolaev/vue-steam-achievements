@@ -45,7 +45,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 450px;
+  width: 90%;
+  max-width: 450px;
 }
 .achievement-text__title {
   color: #e1e1e1;

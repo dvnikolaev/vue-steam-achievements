@@ -161,4 +161,13 @@ body {
 #app {
   display: flex;
 }
+
+@media screen and (max-width: 1195px) {
+  body {
+    margin: 0;
+  }
+  #app {
+    flex-direction: column;
+  }
+}
 </style>

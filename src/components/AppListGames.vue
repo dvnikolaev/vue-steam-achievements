@@ -17,7 +17,7 @@ import ListOfGames from "./Lists/ListOfGames";
 export default {
   props: {
     listOfGames: Array,
-    activeGameName: String
+    activeGameName: String,
   },
   data() {
     return {
@@ -46,5 +46,10 @@ export default {
   width: max-content;
   display: flex;
   flex-direction: column;
+}
+@media screen and (max-width: 1195px) {
+  .list-wrapper {
+    margin: 10px;
+  }
 }
 </style>

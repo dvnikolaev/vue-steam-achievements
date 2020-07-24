@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-list-achievements-wrapper">
     <div class="app-lists-achievements" v-if="showLists">
       <h2 class="lists-achievements__header">{{ activeGame.name }}</h2>
       <div class="lists-achievements-wrapper">
@@ -63,5 +63,13 @@ export default {
 .lists-achievements-wrapper {
   display: flex;
   align-self: flex-start;
+}
+@media screen and (max-width: 1195px) {
+  .app-lists-achievements-wrapper {
+    margin: 0 10px;
+  }
+  .app-lists-achievements {
+    margin: 0 10px 10px;
+  }
 }
 </style>

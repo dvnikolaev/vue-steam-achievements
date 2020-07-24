@@ -49,4 +49,13 @@ export default {
   list-style: none;
   padding: 0;
 }
+@media screen and (max-width: 1195px) {
+  .list-of-games {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: calc(100vw - 37px);
+    max-height: 450px;
+    overflow: auto;
+  }
+}
 </style>
