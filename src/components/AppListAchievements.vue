@@ -15,7 +15,7 @@
         />
       </div>
     </div>
-    <AppSpinner v-if="showSpinner"/>
+    <AppSpinner v-if="showSpinner" />
   </div>
 </template>
 
@@ -32,13 +32,13 @@ export default {
     showLists() {
       return (
         (this.activeGame.achievements.length ||
-        this.activeGame.hiddenAchievements.length) &&
+          this.activeGame.hiddenAchievements.length) &&
         !this.activeGame.loading
       );
     },
     showSpinner() {
-      return this.activeGame.loading
-    }
+      return this.activeGame.loading;
+    },
   },
   components: {
     ListOfGames,
@@ -70,6 +70,12 @@ export default {
   }
   .app-lists-achievements {
     margin: 0 10px 10px;
+  }
+}
+
+@media screen and (max-width: 815px) {
+  .lists-achievements-wrapper {
+    flex-direction: column;
   }
 }
 </style>

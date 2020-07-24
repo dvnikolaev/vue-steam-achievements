@@ -44,4 +44,14 @@ export default {
   padding: 0; 
   list-style: none;
 }
+
+@media screen and (max-width: 815px) {
+  .list-achieve-wrapper {
+    margin: 10px auto 0;
+    width: calc(100% - 20px);
+  }
+  .list-achieve-wrapper:not(:first-child) {
+    margin-left: auto;
+  }
+}
 </style>
